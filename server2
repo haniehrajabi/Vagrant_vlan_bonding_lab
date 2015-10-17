@@ -12,15 +12,17 @@ iface lo inet loopback
 #     broadcast 192.168.1.255
 
 auto eth1
- iface eth1 inet manual
-     bond-master bond0
+iface eth1 inet manual
+    pre-up ip link set up dev eth1
+    bond-master bond0
 
 auto eth2
- iface eth2 inet manual
-     bond-master bond0
+iface eth2 inet manual
+  pre-up ip link set up dev eth2
+  bond-master bond0
 
 auto bond0
- iface bond0 inet manual
+iface bond0 inet manual
      bond-mode 4
      bond-miimon 100
      bond-lacp-rate 1
@@ -33,7 +35,6 @@ auto bond0.40
      netmask 255.255.255.0
      network 1.1.1.0
      broadcast 1.1.1.255
-     gateway 1.1.1.254
      vlan-raw-device bond0
 
 auto bond0.50
@@ -42,7 +43,6 @@ auto bond0.50
      netmask 255.255.0.0
      network 172.16.0.0
      broadcast 172.16.255.255
-     gateway 172.16.0.1
      vlan-raw-device bond0
 
 
@@ -53,4 +53,3 @@ auto bond0.50
 # /etc/network/interfaces.d/eth0
 # See LP: #1262951
 source /etc/network/interfaces.d/*.cfg
-
