@@ -11,6 +11,19 @@ Vagrant.configure(2) do |config|
       vb.gui = true
       vb.memory = "1024"
     end
+    s1.vm.provision "shell", inline: <<-SHELL
+        #sudo apt-get update
+        sudo apt-get install -y vlan ifenslave-2.6
+        sudo cp /vagrant/server1 /etc/network/interfaces
+        sudo ifup eth1
+        sudo ifup eth2
+        sudo modprobe bonding
+        sudo modprobe 8021q
+        sudo su -c 'echo "8021q" >> /etc/modules'
+        sudo su -c 'echo "bonding" >> /etc/modules'
+        sudo ifup bond0.40
+        sudo ifup bond0.50
+    SHELL
   end
   config.vm.define "server2" do |s2|
     s2.vm.box = "ubuntu/trusty64"
@@ -20,5 +33,18 @@ Vagrant.configure(2) do |config|
       vb.gui = true
       vb.memory = "1024"
     end
+    s2.vm.provision "shell", inline: <<-SHELL
+        #sudo apt-get update
+        sudo apt-get install -y vlan ifenslave-2.6
+        sudo cp /vagrant/server2 /etc/network/interfaces
+        sudo ifup eth1
+        sudo ifup eth2
+        sudo modprobe bonding
+        sudo modprobe 8021q
+        sudo su -c 'echo "8021q" >> /etc/modules'
+        sudo su -c 'echo "bonding" >> /etc/modules'
+        sudo ifup bond0.40
+        sudo ifup bond0.50
+    SHELL
   end
 end
