@@ -1,0 +1,56 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+#auto eth0
+# iface eth0 inet static
+#     address 192.168.1.123/24
+#     gateway 192.168.1.1
+#     broadcast 192.168.1.255
+
+auto eth1
+ iface eth1 inet manual
+     bond-master bond0
+
+auto eth2
+ iface eth2 inet manual
+     bond-master bond0
+
+auto bond0
+ iface bond0 inet manual
+     bond-mode 4
+     bond-miimon 100
+     bond-lacp-rate 1
+     bond-slaves eth1 eth2
+     mtu 9000
+
+auto bond0.40
+ iface bond0.40 inet static
+     address 1.1.1.2
+     netmask 255.255.255.0
+     network 1.1.1.0
+     broadcast 1.1.1.255
+     gateway 1.1.1.254
+     vlan-raw-device bond0
+
+auto bond0.50
+ iface bond0.50 inet static
+     address 172.16.9.10
+     netmask 255.255.0.0
+     network 172.16.0.0
+     broadcast 172.16.255.255
+     gateway 172.16.0.1
+     vlan-raw-device bond0
+
+
+# Source interfaces
+# Please check /etc/network/interfaces.d before changing this file
+# as interfaces may have been defined in /etc/network/interfaces.d
+# NOTE: the primary ethernet device is defined in
+# /etc/network/interfaces.d/eth0
+# See LP: #1262951
+source /etc/network/interfaces.d/*.cfg
+
