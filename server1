@@ -33,7 +33,6 @@ auto bond0.40
      netmask 255.255.255.0
      network 1.1.1.0
      broadcast 1.1.1.255
-     gateway 1.1.1.254
      vlan-raw-device bond0
 
 auto bond0.50
@@ -42,7 +41,6 @@ auto bond0.50
      netmask 255.255.0.0
      network 172.16.0.0
      broadcast 172.16.255.255
-     gateway 172.16.0.1
      vlan-raw-device bond0
 # Source interfaces
 # Please check /etc/network/interfaces.d before changing this file
